@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer sr;
+    [SerializeField] private int jump;
+    private bool isTagGround;
     //public BoxCollider2D boxCollider1;
     //public BoxCollider2D boxCollider2;
 
@@ -14,7 +16,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void FixedUpdate(){
+    private void Update(){
         rb.velocity = new Vector2(Input.GetAxis("Horizontal"), rb.velocity.y);
         
         if(Input.GetAxis("Horizontal") == 0)
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
             sr.flipX = true;
         }
         
-        if(Input.GetKey(KeyCode.S)) Crouch();
+        if(Input.GetKeyDown(KeyCode.S)) Crouch();
         else CrouchOff();
         
         if(Input.GetKeyDown(KeyCode.W))
@@ -47,7 +49,17 @@ public class PlayerController : MonoBehaviour
     }
 
     void Jump(){
-        anim.SetInteger("Anim", 2);
-        rb.AddForce(transform.up, ForceMode2D.Impulse);
+        if(isTagGround){
+            rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
+            anim.SetTrigger("Jump");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.tag == "ground") isTagGround = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other){
+        if(other.tag == "ground") isTagGround = false;
     }
 }
