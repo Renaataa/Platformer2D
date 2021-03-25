@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void CrouchOff(){
-        GetComponent<BoxCollider2D>().size = new Vector2(0.2290478f, 0.4405826f);
+        GetComponent<BoxCollider2D>().size = new Vector2(0.2290478f, 0.4017991f);
         GetComponent<BoxCollider2D>().offset = new Vector2(-0.005111992f, -0.07970869f);
     }
 
