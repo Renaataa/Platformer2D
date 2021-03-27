@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     SpriteRenderer sr;
 
-    public CircleCollider2D circleCollider;
     [SerializeField] private int jump;
     private bool isTagGround;
 
@@ -39,29 +38,30 @@ public class PlayerController : MonoBehaviour
 
     void Crouch(){
         anim.SetInteger("Anim", 3);
-        GetComponent<BoxCollider2D>().size = new Vector2(0.3199312f, 0.2900325f);
-        GetComponent<BoxCollider2D>().offset = new Vector2(-0.03044912f, -0.1549837f);
+        
+        if(!sr.flipX){
+            GetComponent<CapsuleCollider2D>().offset = new Vector2(-0.07019526f, -0.1549015f);
+            GetComponent<CapsuleCollider2D>().size = new Vector2(0.2404226f, 0.3056974f);
+        }
+        else if(sr.flipX){
+            GetComponent<CapsuleCollider2D>().offset = new Vector2(0.07049161f, -0.1583256f);
+            GetComponent<CapsuleCollider2D>().size = new Vector2(0.2399668f, 0.2988491f);
+        }    
     }
 
     void Jump(){
         if(isTagGround){
             rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
             anim.SetTrigger("Jump");
-            //GetComponent<BoxCollider2D>().enabled = false;
-            GetComponent<BoxCollider2D>().size = new Vector2(0.1803429f, 0.3297041f);
-            GetComponent<BoxCollider2D>().offset = new Vector2(-0.008590907f, -0.02486522f);
-
-            circleCollider.radius = 0.05686685f;
-            circleCollider.offset = new Vector2(0.01013142f, -0.2965837f);
+            
+            GetComponent<CapsuleCollider2D>().offset = new Vector2(0.000667572f, -0.01985767f);
+            GetComponent<CapsuleCollider2D>().size = new Vector2(0.2616048f, 0.3212546f);
         }
     }
 
     void CrouchJumpOff(){
-        GetComponent<BoxCollider2D>().size = new Vector2(0.2290478f, 0.3262739f);
-        GetComponent<BoxCollider2D>().offset = new Vector2(-0.005111992f, -0.02317221f);
-        //GetComponent<BoxCollider2D>().enabled = false;
-        circleCollider.radius = 0.115769f;
-        circleCollider.offset = new Vector2(-0.005348921f, -0.1860802f);
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(-0.005184233f, -0.08056042f);
+        GetComponent<CapsuleCollider2D>().size = new Vector2(0.2300652f, 0.4543795f);
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(other.tag == "ground") {
