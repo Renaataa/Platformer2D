@@ -37,7 +37,7 @@ public class Ghoul : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.tag == "Player"){
             anim.SetInteger("Ghoul", 1);
-            Invoke("Destroy", 0.5f);
+            Invoke("Destroy", 0.3f);
         }
     }
 

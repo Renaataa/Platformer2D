@@ -17,23 +17,30 @@ public class PlayerController : MonoBehaviour
 
     private void Update(){
         rb.velocity = new Vector2(Input.GetAxis("Horizontal"), rb.velocity.y);
-        
-        if(Input.GetAxis("Horizontal") == 0)
+
+        if(Input.GetAxis("Horizontal") == 0){
             anim.SetInteger("Anim", 0);
+        }
         else if(Input.GetAxis("Horizontal") > 0){
             anim.SetInteger("Anim", 1);
             sr.flipX = false;
+            if(!isTagGround) anim.SetInteger("Anim", 2);
         }
         else if(Input.GetAxis("Horizontal") < 0){
             anim.SetInteger("Anim", 1);
             sr.flipX = true;
+            if(!isTagGround) anim.SetInteger("Anim", 2);
         }
         
         if(Input.GetKeyDown(KeyCode.S)) Crouch();
         else if(Input.GetKeyUp(KeyCode.S)) CrouchJumpOff();
 
         if(Input.GetKeyDown(KeyCode.W)) Jump();
-        else if(Input.GetKeyUp(KeyCode.W)) CrouchJumpOff();      
+        else 
+        {
+            if(isTagGround) anim.SetBool("IsJumping", false);
+            if(Input.GetKeyUp(KeyCode.W)) CrouchJumpOff();      
+        }
     }
 
     void Crouch(){
@@ -51,8 +58,8 @@ public class PlayerController : MonoBehaviour
 
     void Jump(){
         if(isTagGround){
+            anim.SetBool("IsJumping", true);
             rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
-            anim.SetTrigger("Jump");
             
             GetComponent<CapsuleCollider2D>().offset = new Vector2(0.000667572f, -0.01985767f);
             GetComponent<CapsuleCollider2D>().size = new Vector2(0.2616048f, 0.3212546f);
