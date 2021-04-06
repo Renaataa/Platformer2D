@@ -38,8 +38,12 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W)) Jump();
         else 
         {
-            if(isTagGround) anim.SetBool("IsJumping", false);
-            if(Input.GetKeyUp(KeyCode.W)) CrouchJumpOff();      
+            if(Input.GetKeyUp(KeyCode.W)) CrouchJumpOff();     
+            //Debug.Log("here " + isTagGround);
+            if(Input.GetButtonUp("Vertical") == true && isTagGround == true) {
+                anim.SetBool("IsJumping", false);
+                Debug.Log("here2");
+            } 
         }
     }
 
@@ -61,8 +65,8 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsJumping", true);
             rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
             
-            GetComponent<CapsuleCollider2D>().offset = new Vector2(0.000667572f, -0.01985767f);
-            GetComponent<CapsuleCollider2D>().size = new Vector2(0.2616048f, 0.3212546f);
+            //GetComponent<CapsuleCollider2D>().offset = new Vector2(0.000667572f, -0.01985767f);
+            //GetComponent<CapsuleCollider2D>().size = new Vector2(0.2616048f, 0.3212546f);
         }
     }
 
