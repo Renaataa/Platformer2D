@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControler2 : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
     public float speed;
     public float jumpForce;
@@ -11,9 +11,7 @@ public class PlayerControler2 : MonoBehaviour
     private Rigidbody2D rb;
     private bool facingRight = true;
     public bool isGrounded;
-    public Transform groundCheck;
-    public float checkRadius;
-    public LayerMask whatIsGround;
+    
     private int extraJumps;
     public int extraJumpsValue;
 
@@ -23,8 +21,6 @@ public class PlayerControler2 : MonoBehaviour
     }
 
     private void FixedUpdate(){
-        
-
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput*speed, rb.velocity.y);
 
@@ -36,8 +32,6 @@ public class PlayerControler2 : MonoBehaviour
     }
 
     private void Update(){
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
         if(isGrounded == true){
             extraJumps = extraJumpsValue;
         }

@@ -11,10 +11,11 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     void Update(){
+
         if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)){
-            anim.SetBool("isRunning", true);
+            anim.SetBool("isWalking", true);
         } else {
-            anim.SetBool("isRunning", false);
+            anim.SetBool("isWalking", false);
         }
 
         if(Input.GetKeyDown(KeyCode.UpArrow) && GetComponent<PlayerController2>().isGrounded == true){
