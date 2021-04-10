@@ -1312,11 +1312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   jumpForce: 5
-  moveInput: 0
-  rb: {fileID: 0}
-  facingRight: 1
   isGrounded: 0
-  extraJumps: 0
   extraJumpsValue: 0
 --- !u!212 &1324302241
 SpriteRenderer:
