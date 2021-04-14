@@ -10,7 +10,7 @@ public class Ghoul : MonoBehaviour
     public int distance;
     float maxDistance;
     float minDistance;
-    float speed = 1.3f;
+    float speed = 1f;
 
     private void Start (){
         anim = GetComponent<Animator>();
@@ -21,7 +21,7 @@ public class Ghoul : MonoBehaviour
         minDistance = transform.position.x - distance;
     }
 
-    private void Update(){
+    private void FixedUpdate(){
         transform.Translate(transform.right * speed * Time.deltaTime);
         
         if(transform.position.x > maxDistance){
@@ -34,10 +34,12 @@ public class Ghoul : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
+    private void OnCollisionEnter2D(Collision2D other){
         if(other.gameObject.tag == "Player"){
-            anim.SetInteger("Ghoul", 1);
-            Invoke("Destroy", 0.3f);
+            anim.SetTrigger("Ghoul");
+            speed = 0;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
+            Invoke("Destroy", 0.6f);
         }
     }
 
