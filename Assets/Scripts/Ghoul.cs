@@ -39,7 +39,7 @@ public class Ghoul : MonoBehaviour
             anim.SetTrigger("Ghoul");
             speed = 0;
             rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
-            Invoke("Destroy", 0.6f);
+            Destroy(gameObject, 0.6f);
         }
     }
 
