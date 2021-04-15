@@ -10,6 +10,8 @@ public class Fireball : MonoBehaviour
     private void Start(){
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        Destroy(gameObject, 1);
     }
 
     private void FixedUpdate(){
@@ -19,7 +21,7 @@ public class Fireball : MonoBehaviour
             rb.AddForce(-transform.right * 2, ForceMode2D.Force);
     }
     private void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" || other.gameObject.tag == "ground")
             Destroy(gameObject);
     }
 }

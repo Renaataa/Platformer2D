@@ -23,8 +23,16 @@ public class Wizard : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.tag == "Player")
-            SpawnFireball();
+        if(other.gameObject.tag == "Player"){
+            anim.SetInteger("Wizard", 1);
+            Progress.StartNewProgress(this.gameObject, 0.9f, SpawnFireball);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other){
+        if(other.gameObject.tag == "Player"){
+            anim.SetInteger("Wizard", 0);
+            Progress.StartNewProgress(this.gameObject, 0, SpawnFireball);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other){
@@ -36,8 +44,6 @@ public class Wizard : MonoBehaviour
     }
 
     void SpawnFireball(){
-        anim.SetInteger("Wizard", 1);
-
         if(sr.flipX == false){
             fireball.GetComponent<SpriteRenderer>().flipX = false;
             Instantiate(fireball, new Vector2(transform.position.x - 0.3f, transform.position.y), Quaternion.identity);
