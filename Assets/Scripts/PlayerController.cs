@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
         else 
         {
             if(Input.GetKeyUp(KeyCode.W)) CrouchJumpOff();     
-            //Debug.Log("here " + isTagGround);
             if(Input.GetButtonUp("Vertical") == true && isTagGround == true) {
                 anim.SetBool("IsJumping", false);
                 Debug.Log("here2");
