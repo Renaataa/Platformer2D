@@ -40,7 +40,9 @@
      <Compile Include="Assets\Scripts\CharacterAnimation.cs" />
      <Compile Include="Assets\Scripts\CorutineLoader.cs" />
      <Compile Include="Assets\Scripts\DetectorGround.cs" />
-     <Compile Include="Assets\Scripts\FillBar.cs" />
+     <Compile Include="Assets\Scripts\EnemyDamage.cs" />
+     <Compile Include="Assets\Scripts\FillEnergyBar.cs" />
+     <Compile Include="Assets\Scripts\FillHealthBar.cs" />
      <Compile Include="Assets\Scripts\Fireball.cs" />
      <Compile Include="Assets\Scripts\Ghoul.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

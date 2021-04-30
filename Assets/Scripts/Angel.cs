@@ -8,6 +8,7 @@ public class Angel : MonoBehaviour
     Animator anim;
     SpriteRenderer sr;
     bool attack = false;
+    private float health = 30;
 
     private void Start(){
         rb = GetComponent<Rigidbody2D>();
@@ -25,14 +26,27 @@ public class Angel : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.tag == "Player")
             attack = true;
+
+        if(other.gameObject.tag == "EnemyDamage"){
+            Damage();
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.tag == "Player"){
+    public void Damage(){
+        if(GameObject.Find("Player").GetComponent<CharacterAnimation>().energyBonus == true)
+            health -= 5;
+        else 
+            health--;
+
+        if(health <= 0){
             anim.SetInteger("Angel", 2);
             attack = false;
             rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezePositionY|RigidbodyConstraints2D.FreezeRotation;
             Destroy(gameObject, 0.6f);
         }
+    }
+
+    private void OnDestroy() {
+        GameObject.Find("Player").GetComponent<CharacterAnimation>().energy += 30f;
     }
 }

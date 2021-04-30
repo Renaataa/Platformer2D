@@ -6,14 +6,18 @@ public class CharacterAnimation : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    private Collider2D coll;
     public GameObject damage;
     int hit;
-    int crouchKickCount = 0;
     float health = 10;
+    public float energy;
+    public bool energyBonus = false;
 
     void Start(){
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
@@ -24,18 +28,24 @@ public class CharacterAnimation : MonoBehaviour
                 health -=0.5f;
             else if(collision.gameObject.GetComponent<Wizard>() == true)
                 health -=2;
-            else if(collision.gameObject.GetComponent<Ghoul>() == true)
+            else if(collision.gameObject.GetComponent<Ghoul>() == true){
                 health --;
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
+                coll = collision.collider;
+            }
             
-            GameObject.Find("HealthBar").GetComponent<FillBar>().CurrentValue = health*0.1f;
-            
+            GameObject.Find("HealthBar").GetComponent<FillHealthBar>().CurrentValue = health*0.1f;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
+
             anim.SetInteger("hurt", 0);
             Invoke("AnimHurtOff", 0.25f);
+            Invoke("HurtOff", 0.5f);
         }
     }
 
     void Update(){
-
+        GameObject.Find("EnergyBar").GetComponent<FillEnergyBar>().CurrentValue = energy/50f;
+        
         if((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))){
             anim.SetBool("isWalking", true);
         } else {
@@ -60,10 +70,18 @@ public class CharacterAnimation : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && GetComponent<PlayerController2>().isGrounded == true){
             Hit();
         }
+
+        if(Input.GetKeyDown(KeyCode.W)){
+            EnergyBonus();
+        }
     }
 
     void AnimHurtOff(){
         anim.SetInteger("hurt", -1);
+    }
+    void HurtOff(){
+        if (coll) Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), false);
+        rb.constraints = RigidbodyConstraints2D.None|RigidbodyConstraints2D.FreezeRotation;
     }
 
     void FlyingKick(){
@@ -115,5 +133,20 @@ public class CharacterAnimation : MonoBehaviour
             Instantiate(damage, new Vector2(transform.position.x - distance, transform.position.y), Quaternion.identity);
         else if(transform.localScale.x > 0)
             Instantiate(damage, new Vector2(transform.position.x + distance, transform.position.y), Quaternion.identity);
+    }
+
+    void EnergyBonus(){
+        if(energy >= 50)
+        {
+            energy = 0;
+            energyBonus = true;
+            GetComponent<PlayerController2>().speed++;
+            Invoke("EnergyBonusOff", 5);
+        }
+    }
+
+    void EnergyBonusOff(){
+        energyBonus = false;
+        GetComponent<PlayerController2>().speed--;
     }
 }

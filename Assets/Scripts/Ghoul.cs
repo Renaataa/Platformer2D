@@ -11,6 +11,7 @@ public class Ghoul : MonoBehaviour
     float maxDistance;
     float minDistance;
     float speed = 1f;
+    float health = 10;
 
     private void Start (){
         anim = GetComponent<Animator>();
@@ -34,8 +35,19 @@ public class Ghoul : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.tag == "Player"){
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.tag == "EnemyDamage"){
+            Damage();
+        }
+    }
+
+    public void Damage(){
+        if(GameObject.Find("Player").GetComponent<CharacterAnimation>().energyBonus == true)
+            health -= 5;
+        else 
+            health--;
+
+        if(health <= 0){
             anim.SetTrigger("Ghoul");
             speed = 0;
             rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
@@ -43,7 +55,7 @@ public class Ghoul : MonoBehaviour
         }
     }
 
-    void Destroy(){
-        Destroy(gameObject);
+    private void OnDestroy() {
+        GameObject.Find("Player").GetComponent<CharacterAnimation>().energy += 10f;
     }
 }
