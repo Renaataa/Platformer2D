@@ -59,7 +59,7 @@ public class CharacterAnimation : MonoBehaviour
             }
             Invoke("AnimJumpOff", 0.15f);
         }
-        if(GetComponent<PlayerController2>().isGrounded == false && Input.GetMouseButton(0)){
+        if(GetComponent<PlayerController2>().isGrounded == false && Input.GetKey(KeyCode.Space)){
             FlyingKick();
         }
 
@@ -67,11 +67,11 @@ public class CharacterAnimation : MonoBehaviour
             Crouch();
         }
 
-        if(Input.GetMouseButton(0) && GetComponent<PlayerController2>().isGrounded == true){
+        if(Input.GetKey(KeyCode.Space) && GetComponent<PlayerController2>().isGrounded == true){
             Hit();
         }
 
-        if(Input.GetMouseButton(1)){
+        if(Input.GetKey(KeyCode.E)){
             EnergyBonus();
         }
     }

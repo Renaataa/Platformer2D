@@ -58,11 +58,12 @@ public class Wizard : MonoBehaviour
             
         if(health <= 0){
             anim.SetInteger("Wizard", 2); 
-            Destroy(gameObject, 0.5f);
+            Invoke("Destroy", 0.5f);
         }
     }
 
-    private void OnDestroy() {
+    private void Destroy() {
+        gameObject.SetActive(false);
         GameObject.Find("Player").GetComponent<CharacterAnimation>().energy += 20f;
     }
 }
