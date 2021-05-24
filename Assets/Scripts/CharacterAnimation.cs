@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimation : MonoBehaviour
 {
+    public Joystick joystick;
     private Animator anim;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -46,33 +47,22 @@ public class CharacterAnimation : MonoBehaviour
     void Update(){
         GameObject.Find("EnergyBar").GetComponent<FillEnergyBar>().CurrentValue = energy/50f;
         
-        if((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))){
+        if(joystick.Horizontal < 0 || joystick.Horizontal > 0){
             anim.SetBool("isWalking", true);
         } else {
             anim.SetBool("isWalking", false);
         }
 
-        if(Input.GetKeyDown(KeyCode.UpArrow) && GetComponent<PlayerController2>().isGrounded == true){
-            if(!Input.GetKeyDown(KeyCode.DownArrow) && !Input.GetKey(KeyCode.DownArrow)){
+        if(joystick.Vertical > 0.3 && GetComponent<PlayerController2>().isGrounded == true){
+            if(!(joystick.Vertical <= 0)){
                 HitOff();
                 anim.SetInteger("Jump", 0);
             }
             Invoke("AnimJumpOff", 0.15f);
         }
-        if(GetComponent<PlayerController2>().isGrounded == false && Input.GetKey(KeyCode.Space)){
-            FlyingKick();
-        }
 
-        if((Input.GetKeyDown(KeyCode.DownArrow)) && GetComponent<PlayerController2>().isGrounded == true){
+        if((joystick.Vertical < -0.3) && GetComponent<PlayerController2>().isGrounded == true){
             Crouch();
-        }
-
-        if(Input.GetKey(KeyCode.Space) && GetComponent<PlayerController2>().isGrounded == true){
-            Hit();
-        }
-
-        if(Input.GetKey(KeyCode.E)){
-            EnergyBonus();
         }
     }
 
@@ -82,6 +72,15 @@ public class CharacterAnimation : MonoBehaviour
     void HurtOff(){
         if (coll) Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), false);
         rb.constraints = RigidbodyConstraints2D.None|RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public void ButtonHit(){
+        if(GetComponent<PlayerController2>().isGrounded == false){
+            FlyingKick();
+        }
+        if(GetComponent<PlayerController2>().isGrounded == true){
+            Hit();
+        }
     }
 
     void FlyingKick(){
@@ -121,7 +120,7 @@ public class CharacterAnimation : MonoBehaviour
         GetComponent<CapsuleCollider2D>().size = new Vector2(0.1009637f, 0.2951798f);  
         rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezePositionY|RigidbodyConstraints2D.FreezeRotation;
 
-        Invoke("CrouchOff", 0.35f);
+        Invoke("CrouchOff", 0.5f);
     }
     void CrouchOff(){
         GetComponent<CapsuleCollider2D>().offset = new Vector2(-0.005184233f, -0.07877457f);
@@ -136,7 +135,7 @@ public class CharacterAnimation : MonoBehaviour
             Instantiate(damage, new Vector2(transform.position.x + distance, transform.position.y), Quaternion.identity);
     }
 
-    void EnergyBonus(){
+    public void EnergyBonus(){
         if(energy >= 50)
         {
             energy = 0;
