@@ -14,6 +14,7 @@ public class CharacterAnimation : MonoBehaviour
     float health = 10;
     public float energy;
     public bool energyBonus = false;
+    public GameObject PanelGameOver;
 
     void Start(){
         anim = GetComponent<Animator>();
@@ -36,11 +37,19 @@ public class CharacterAnimation : MonoBehaviour
             }
             
             GameObject.Find("HealthBar").GetComponent<FillHealthBar>().CurrentValue = health*0.1f;
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
+            GameObject.Find("Fill").GetComponent<Animation>().Play();
+            GameObject.Find("Blood").GetComponent<Animation>().Play();
 
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
             anim.SetInteger("hurt", 0);
+            
             Invoke("AnimHurtOff", 0.25f);
             Invoke("HurtOff", 0.5f);
+
+            if(health <= 0){
+                PanelGameOver.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
     }
 
