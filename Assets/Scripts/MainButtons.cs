@@ -18,4 +18,24 @@ public class MainButtons : MonoBehaviour
     public void ResetScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void ResetLevel(){
+        SceneManager.LoadScene(Application.loadedLevel);
+    }
+
+    public void Menu(){
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Play(){
+        SceneManager.LoadScene("main");
+    }
+
+    public void Level(){
+        SceneManager.LoadScene("Level");
+    }
+
+    public void Exit(){
+        Application.Quit();
+    }
 }
