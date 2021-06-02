@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class CharacterAnimation : MonoBehaviour
 {
@@ -11,17 +11,29 @@ public class CharacterAnimation : MonoBehaviour
     private Collider2D coll;
     public GameObject damage;
     int hit;
+    int level=0;
     float health = 10;
     public float energy;
     public bool energyBonus = false;
     public GameObject PanelGameOver;
+    public GameObject PanelWin;
 
     void Start(){
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        level = PlayerPrefs.GetInt("Level");
     }
-
+    private void OnTriggerEnter2D(Collider2D collision){
+        if(collision.gameObject.tag == "win"){
+            if(Convert.ToInt32(collision.gameObject.name) > level){
+                level++;
+                PlayerPrefs.SetInt("Level", level);
+            }
+            PanelWin.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Enemy"){
             if(collision.gameObject.GetComponent<Angel>() == true)
@@ -106,7 +118,7 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     void Hit(){
-        hit = Random.Range(0, 2);
+        hit = UnityEngine.Random.Range(0, 2);
         anim.SetInteger("hit", hit);
 
         DamageFlip(0.3f);

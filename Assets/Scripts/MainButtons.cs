@@ -22,13 +22,16 @@ public class MainButtons : MonoBehaviour
     public void ResetLevel(){
         SceneManager.LoadScene(Application.loadedLevel);
     }
+    public void ResetGame(){
+        PlayerPrefs.DeleteAll();
+    }
 
     public void Menu(){
         SceneManager.LoadScene("Menu");
     }
 
     public void Play(){
-        SceneManager.LoadScene("main");
+        SceneManager.LoadScene((PlayerPrefs.GetInt("Level") + 1).ToString());
     }
 
     public void Level(){
