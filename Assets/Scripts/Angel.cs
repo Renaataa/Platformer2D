@@ -18,6 +18,7 @@ public class Angel : MonoBehaviour
 
     private void FixedUpdate(){
         if(attack == true){
+            GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().flyingAngel);
             anim.SetInteger("Angel", 1);
             transform.position = Vector2.Lerp(transform.position, GameObject.Find("Player").transform.position, Time.deltaTime);
         }

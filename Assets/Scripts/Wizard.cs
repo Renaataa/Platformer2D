@@ -24,6 +24,7 @@ public class Wizard : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.tag == "Player"){
+            GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().wizard);
             anim.SetInteger("Wizard", 1);
             Progress.StartNewProgress(this.gameObject, 0.9f, SpawnFireball);
         }

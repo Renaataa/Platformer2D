@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - EnemyDamage
   - win
+  - Audio
+  - AudioEnemy
   layers:
   - Default
   - TransparentFX

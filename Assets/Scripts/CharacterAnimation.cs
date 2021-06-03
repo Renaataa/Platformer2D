@@ -36,13 +36,16 @@ public class CharacterAnimation : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Enemy"){
-            if(collision.gameObject.GetComponent<Angel>() == true)
+            if(collision.gameObject.GetComponent<Angel>() == true){
+                GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().attackAngel);
                 health -=3;
+            }
             else if(collision.gameObject.GetComponent<Fireball>() == true)
                 health -=0.5f;
             else if(collision.gameObject.GetComponent<Wizard>() == true)
                 health -=2;
             else if(collision.gameObject.GetComponent<Ghoul>() == true){
+                GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().attackGhoul);
                 health --;
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
                 coll = collision.collider;
@@ -53,6 +56,7 @@ public class CharacterAnimation : MonoBehaviour
             GameObject.Find("Blood").GetComponent<Animation>().Play();
 
             rb.constraints = RigidbodyConstraints2D.FreezePositionX|RigidbodyConstraints2D.FreezeRotation;
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().hurt);
             anim.SetInteger("hurt", 0);
             
             Invoke("AnimHurtOff", 0.25f);
@@ -69,6 +73,7 @@ public class CharacterAnimation : MonoBehaviour
         GameObject.Find("EnergyBar").GetComponent<FillEnergyBar>().CurrentValue = energy/50f;
         
         if(joystick.Horizontal < 0 || joystick.Horizontal > 0){
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().walk);
             anim.SetBool("isWalking", true);
         } else {
             anim.SetBool("isWalking", false);
@@ -77,6 +82,7 @@ public class CharacterAnimation : MonoBehaviour
         if(joystick.Vertical > 0.3 && GetComponent<PlayerController2>().isGrounded == true){
             if(!(joystick.Vertical <= 0)){
                 HitOff();
+                GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().jump);
                 anim.SetInteger("Jump", 0);
             }
             Invoke("AnimJumpOff", 0.15f);
@@ -105,6 +111,7 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     void FlyingKick(){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().flyingKick);
         anim.SetInteger("Jump", -1);
         anim.SetInteger("hit", 3);
 
@@ -118,6 +125,7 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     void Hit(){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().kick);
         hit = UnityEngine.Random.Range(0, 2);
         anim.SetInteger("hit", hit);
 
@@ -135,6 +143,7 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     void Crouch(){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().crouch);
         anim.SetTrigger("crouch");
 
         GetComponent<CapsuleCollider2D>().offset = new Vector2(-0.0001967549f, -0.1565886f);

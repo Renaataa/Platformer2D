@@ -16,6 +16,7 @@ public class LoadLevel : MonoBehaviour, IPointerDownHandler
         }
     }
     public void OnPointerDown(PointerEventData eventData){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         if(load == true){
             SceneManager.LoadScene(Convert.ToInt32(gameObject.name).ToString());
         }
