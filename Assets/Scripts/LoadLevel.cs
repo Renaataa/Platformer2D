@@ -3,15 +3,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using TMPro;
 
 public class LoadLevel : MonoBehaviour, IPointerDownHandler
 {
     bool load = false;
+    
     private void Start(){
         if(PlayerPrefs.GetInt("Level") + 1 >= Convert.ToInt32(gameObject.name)){
-            GetComponent<Image>().color = Color.white;
-            GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+            gameObject.GetComponentInChildren<Image>().color =  new Color(0.651f, 0.549f, 0.345f);
             load = true;
         }
     }
@@ -19,6 +18,7 @@ public class LoadLevel : MonoBehaviour, IPointerDownHandler
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         if(load == true){
             SceneManager.LoadScene(Convert.ToInt32(gameObject.name).ToString());
+            Time.timeScale = 1;
         }
     }
 }

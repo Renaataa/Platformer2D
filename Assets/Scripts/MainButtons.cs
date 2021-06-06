@@ -22,11 +22,13 @@ public class MainButtons : MonoBehaviour
     public void ResetScene(){
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 
     public void ResetLevel(){
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         SceneManager.LoadScene(Application.loadedLevel);
+        Time.timeScale = 1;
     }
     public void ResetGame(){
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
@@ -41,6 +43,7 @@ public class MainButtons : MonoBehaviour
     public void Play(){
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         SceneManager.LoadScene((PlayerPrefs.GetInt("Level") + 1).ToString());
+        Time.timeScale = 1;
     }
 
     public void Level(){

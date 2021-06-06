@@ -10,6 +10,7 @@ TagManager:
   - win
   - Audio
   - AudioEnemy
+  - Level
   layers:
   - Default
   - TransparentFX

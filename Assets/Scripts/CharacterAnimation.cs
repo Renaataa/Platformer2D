@@ -11,7 +11,7 @@ public class CharacterAnimation : MonoBehaviour
     private Collider2D coll;
     public GameObject damage;
     int hit;
-    int level=0;
+    int level = 0;
     float health = 10;
     public float energy;
     public bool energyBonus = false;
