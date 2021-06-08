@@ -26,8 +26,7 @@ public class CharacterAnimation : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.gameObject.tag == "win"){
-            Debug.Log(level+" "+collision.gameObject.name);
-            if(Convert.ToInt32(collision.gameObject.name) > level && level < 6){
+            if(Convert.ToInt32(collision.gameObject.name) > level && level < 4){
                 level++;
                 PlayerPrefs.SetInt("Level", level);
             }
