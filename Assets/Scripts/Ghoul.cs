@@ -19,6 +19,14 @@ public class Ghoul : MonoBehaviour
         GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().walkGhoul);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision){
+        if(collision.gameObject.tag == "Enemy"){
+            if(collision.gameObject.GetComponent<Ghoul>() == true){
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.tag == "EnemyDamage"){
             Damage();
