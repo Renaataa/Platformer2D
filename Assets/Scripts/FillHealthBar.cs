@@ -19,8 +19,4 @@ public class FillHealthBar : MonoBehaviour {
     void Start () {
         CurrentValue = 1f;
     }
-	
-    void Update () {
-        //CurrentValue += 0.0043f;
-    }
 }

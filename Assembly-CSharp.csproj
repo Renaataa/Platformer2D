@@ -58,7 +58,6 @@
      <Compile Include="Assets\Scripts\MainButtons.cs" />
      <Compile Include="Assets\Scripts\Music.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\PlayerController2.cs" />
      <Compile Include="Assets\Scripts\WatchPlayer.cs" />
      <Compile Include="Assets\Scripts\Wizard.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

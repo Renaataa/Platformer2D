@@ -19,8 +19,4 @@ public class FillEnergyBar : MonoBehaviour {
     void Start () {
         CurrentValue = 0f;
     }
-	
-    void Update () {
-        //CurrentValue += 0.0043f;
-    }
 }

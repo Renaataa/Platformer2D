@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 public class CharacterAnimation : MonoBehaviour
@@ -79,7 +78,7 @@ public class CharacterAnimation : MonoBehaviour
             anim.SetBool("isWalking", false);
         }
 
-        if(joystick.Vertical > 0.3 && GetComponent<PlayerController2>().isGrounded == true){
+        if(joystick.Vertical > 0.3 && GetComponent<PlayerController>().isGrounded == true){
             if(!(joystick.Vertical <= 0)){
                 HitOff();
                 GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().jump);
@@ -88,7 +87,7 @@ public class CharacterAnimation : MonoBehaviour
             Invoke("AnimJumpOff", 0.15f);
         }
 
-        if((joystick.Vertical < -0.3) && GetComponent<PlayerController2>().isGrounded == true){
+        if((joystick.Vertical < -0.3) && GetComponent<PlayerController>().isGrounded == true){
             Crouch();
         }
     }
@@ -102,10 +101,10 @@ public class CharacterAnimation : MonoBehaviour
     }
 
     public void ButtonHit(){
-        if(GetComponent<PlayerController2>().isGrounded == false){
+        if(GetComponent<PlayerController>().isGrounded == false){
             FlyingKick();
         }
-        if(GetComponent<PlayerController2>().isGrounded == true){
+        if(GetComponent<PlayerController>().isGrounded == true){
             Hit();
         }
     }
@@ -170,13 +169,13 @@ public class CharacterAnimation : MonoBehaviour
         {
             energy = 0;
             energyBonus = true;
-            GetComponent<PlayerController2>().speed += 0.1f;
+            GetComponent<PlayerController>().speed += 0.1f;
             Invoke("EnergyBonusOff", 5);
         }
     }
 
     void EnergyBonusOff(){
         energyBonus = false;
-        GetComponent<PlayerController2>().speed -= 0.1f;
+        GetComponent<PlayerController>().speed -= 0.1f;
     }
 }
