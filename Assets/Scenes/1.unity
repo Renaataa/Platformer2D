@@ -3987,7 +3987,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 0.75
+  orthographic size: 1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -6722,7 +6722,6 @@ MonoBehaviour:
   speed: 2
   jumpForce: 5
   isGrounded: 0
-  extraJumpsValue: 0
 --- !u!212 &1324302241
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19062,7 +19061,7 @@ PrefabInstance:
     - target: {fileID: 4739707067684219934, guid: f088be1e30c42e44ab157694ccd6341e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4739707067684219934, guid: f088be1e30c42e44ab157694ccd6341e,
         type: 3}

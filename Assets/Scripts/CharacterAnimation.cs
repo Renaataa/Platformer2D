@@ -12,6 +12,7 @@ public class CharacterAnimation : MonoBehaviour
     int hit;
     int level = 0;
     float health = 10;
+    bool protect = false;
     public float energy;
     public bool energyBonus = false;
     public GameObject PanelGameOver;
@@ -32,9 +33,46 @@ public class CharacterAnimation : MonoBehaviour
             PanelWin.SetActive(true);
             Time.timeScale = 0;
         }
+        if(collision.gameObject.name == "Health"){
+            health += 3;
+            if(health > 10) health = 10;
+            GameObject.Find("HealthBar").GetComponent<FillHealthBar>().CurrentValue = health*0.1f;
+            GameObject.Find("Fill").GetComponent<Animation>().Play();
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Jump"){
+            GameObject.Find("Player").GetComponent<PlayerController>().jumpForce *= 1.5f;
+            sr.color = new Color(169f/255, 245f/255, 118f/255);
+            Invoke("OffJump", 5);
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Speed"){
+            GameObject.Find("Player").GetComponent<PlayerController>().speed *= 1.5f;
+            sr.color = new Color(85f/255, 168f/255, 219f/255);
+            Invoke("OffSpeed", 5);
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Protect"){
+            protect = true;
+            sr.color = new Color(169f/255, 245f/255, 118f/255);
+            Invoke("OffProtect", 5);
+            Destroy(collision.gameObject);
+        }
+    }
+    void OffJump(){
+        GameObject.Find("Player").GetComponent<PlayerController>().jumpForce /= 1.5f;
+        sr.color = Color.white;
+    }
+    void OffSpeed(){
+        GameObject.Find("Player").GetComponent<PlayerController>().speed /= 1.5f;
+        sr.color = Color.white;
+    }
+    void OffProtect(){
+        protect = false;
+        sr.color = Color.white;
     }
     private void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.tag == "Enemy"){
+        if(collision.gameObject.tag == "Enemy" && protect == false){
             if(collision.gameObject.GetComponent<Angel>() == true){
                 GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().AudioPlay(GameObject.Find("AudioBoxEnemy").GetComponent<AudioBoxEnemy>().attackAngel);
                 health -=3;
@@ -65,6 +103,11 @@ public class CharacterAnimation : MonoBehaviour
                 PanelGameOver.SetActive(true);
                 Time.timeScale = 0;
             }
+        }
+        else if(collision.gameObject.GetComponent<Ghoul>() == true){
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
+                coll = collision.collider;
+                Invoke("HurtOff", 0.5f);
         }
     }
 

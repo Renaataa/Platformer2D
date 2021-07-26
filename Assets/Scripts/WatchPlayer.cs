@@ -14,6 +14,6 @@ public class WatchPlayer : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, player.position, Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, player.position, Time.deltaTime+0.02f);
     }
 }

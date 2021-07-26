@@ -3702,7 +3702,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 0.75
+  orthographic size: 1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -30050,7 +30050,6 @@ MonoBehaviour:
   speed: 2
   jumpForce: 5
   isGrounded: 0
-  extraJumpsValue: 0
 --- !u!70 &1971800239
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

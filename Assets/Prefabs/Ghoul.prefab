@@ -97,7 +97,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3f4be22724441b744b791923ed3d9554, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b191bf9fea25a944b9a085aeccae3a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
 --- !u!70 &4739707067684219906
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
