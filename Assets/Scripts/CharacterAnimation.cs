@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using TMPro;
 
 public class CharacterAnimation : MonoBehaviour
 {
@@ -13,12 +14,33 @@ public class CharacterAnimation : MonoBehaviour
     int level = 0;
     float health = 10;
     bool protect = false;
+    int countHealth = 0;
+    int countJump = 0;
+    int countSpeed = 0;
+    int countProtect = 0;
+    GameObject panelBoost;
+    GameObject healthBoost;
+    GameObject jumpBoost;
+    GameObject speedBoost;
+    GameObject protectBoost;
     public float energy;
     public bool energyBonus = false;
     public GameObject PanelGameOver;
     public GameObject PanelWin;
 
     void Start(){
+        panelBoost = GameObject.Find("PanelBoost");
+        jumpBoost = GameObject.Find("JumpBoost");
+        healthBoost = GameObject.Find("HealthBoost");
+        speedBoost = GameObject.Find("SpeedBoost");
+        protectBoost = GameObject.Find("ProtectBoost");
+
+        panelBoost.SetActive(false);
+        jumpBoost.SetActive(false);
+        healthBoost.SetActive(false);
+        speedBoost.SetActive(false);
+        protectBoost.SetActive(false);
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -34,42 +56,93 @@ public class CharacterAnimation : MonoBehaviour
             Time.timeScale = 0;
         }
         if(collision.gameObject.name == "Health"){
+            Debug.Log(1);
+            countHealth++;
+            panelBoost.SetActive(true);
+            healthBoost.SetActive(true);
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().pickUpBootle);
+            GameObject.Find("HealthBoostText").GetComponent<TextMeshProUGUI>().text = countHealth.ToString();
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Jump"){
+            countJump++;
+            panelBoost.SetActive(true);
+            jumpBoost.SetActive(true);
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().pickUpBootle);
+            GameObject.Find("JumpBoostText").GetComponent<TextMeshProUGUI>().text = countJump.ToString();
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Speed"){
+            countSpeed++;
+            panelBoost.SetActive(true);
+            speedBoost.SetActive(true);
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().pickUpBootle);
+            GameObject.Find("SpeedBoostText").GetComponent<TextMeshProUGUI>().text = countSpeed.ToString();
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.name == "Protect"){
+            countProtect++;
+            panelBoost.SetActive(true);
+            protectBoost.SetActive(true);
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().pickUpBootle);
+            GameObject.Find("ProtectBoostText").GetComponent<TextMeshProUGUI>().text = countProtect.ToString();
+            Destroy(collision.gameObject);
+        }
+    }
+    public void BoostHealth(){
+        if(countHealth > 0){
+            countHealth--;
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
+            GameObject.Find("HealthBoostText").GetComponent<TextMeshProUGUI>().text = countHealth.ToString();
+            GameObject.Find("HealthBoost").GetComponent<Animation>().Play();
+        
             health += 3;
             if(health > 10) health = 10;
             GameObject.Find("HealthBar").GetComponent<FillHealthBar>().CurrentValue = health*0.1f;
             GameObject.Find("Fill").GetComponent<Animation>().Play();
-            Destroy(collision.gameObject);
         }
-        if(collision.gameObject.name == "Jump"){
+    }
+    public void BoostJump(){
+        if(countJump > 0){
+            countJump--;
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
+            GameObject.Find("JumpBoostText").GetComponent<TextMeshProUGUI>().text = countJump.ToString();
+            GameObject.Find("JumpBoost").GetComponent<Animation>().Play();
+        
             GameObject.Find("Player").GetComponent<PlayerController>().jumpForce *= 1.5f;
-            sr.color = new Color(169f/255, 245f/255, 118f/255);
             Invoke("OffJump", 5);
-            Destroy(collision.gameObject);
         }
-        if(collision.gameObject.name == "Speed"){
+    }
+    public void BoostSpeed(){
+        if(countSpeed > 0){
+            countSpeed--;
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
+            GameObject.Find("SpeedBoostText").GetComponent<TextMeshProUGUI>().text = countSpeed.ToString();
+            GameObject.Find("SpeedBoost").GetComponent<Animation>().Play();
+        
             GameObject.Find("Player").GetComponent<PlayerController>().speed *= 1.5f;
-            sr.color = new Color(85f/255, 168f/255, 219f/255);
             Invoke("OffSpeed", 5);
-            Destroy(collision.gameObject);
         }
-        if(collision.gameObject.name == "Protect"){
+    }
+    public void BoostProtect(){
+        if(countProtect > 0){
+            countProtect--;
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
+            GameObject.Find("ProtectBoostText").GetComponent<TextMeshProUGUI>().text = countProtect.ToString();
+            GameObject.Find("ProtectBoost").GetComponent<Animation>().Play();
+
             protect = true;
-            sr.color = new Color(169f/255, 245f/255, 118f/255);
             Invoke("OffProtect", 5);
-            Destroy(collision.gameObject);
         }
     }
     void OffJump(){
         GameObject.Find("Player").GetComponent<PlayerController>().jumpForce /= 1.5f;
-        sr.color = Color.white;
     }
     void OffSpeed(){
         GameObject.Find("Player").GetComponent<PlayerController>().speed /= 1.5f;
-        sr.color = Color.white;
     }
     void OffProtect(){
         protect = false;
-        sr.color = Color.white;
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Enemy" && protect == false){
@@ -115,7 +188,7 @@ public class CharacterAnimation : MonoBehaviour
         GameObject.Find("EnergyBar").GetComponent<FillEnergyBar>().CurrentValue = energy/50f;
         
         if(joystick.Horizontal < 0 || joystick.Horizontal > 0){
-            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().walk);
+            //GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().walk);
             anim.SetBool("isWalking", true);
         } else {
             anim.SetBool("isWalking", false);

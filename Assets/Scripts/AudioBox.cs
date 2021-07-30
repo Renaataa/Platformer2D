@@ -3,6 +3,8 @@
 public class AudioBox : MonoBehaviour
 {
     public AudioClip click;
+    public AudioClip bonus;
+    public AudioClip pickUpBootle;
     public AudioClip crouch;
     public AudioClip flyingKick;
     public AudioClip hurt;
@@ -18,6 +20,7 @@ public class AudioBox : MonoBehaviour
     }
     public void AudioPlay(AudioClip ac){
         if(PlayerPrefs.GetString("Sound") != "no"){
+            //GetComponent<AudioSource>().Stop();
             GetComponent<AudioSource>().clip = ac;
             GetComponent<AudioSource>().Play();
         }

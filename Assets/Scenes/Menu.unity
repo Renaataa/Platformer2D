@@ -2390,7 +2390,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c535eed74f3f2e44a9074c4ee6355ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  click: {fileID: 8300000, guid: d68f409e9d37fda449cc61ae3cb0d593, type: 3}
+  click: {fileID: 8300000, guid: 515d4e8f841c72b429eeef822eac3287, type: 3}
+  bonus: {fileID: 8300000, guid: 3fad5e3cf2a103b498b621b0c194cdab, type: 3}
+  pickUpBootle: {fileID: 8300000, guid: 0d1b2914a1e870748917fdcc753aaa35, type: 3}
   crouch: {fileID: 8300000, guid: 6ab80dd76ebf5ce45a3292e24fc14e5f, type: 3}
   flyingKick: {fileID: 8300000, guid: 8b417c18226d9064b852c1f70a54ae6e, type: 3}
   hurt: {fileID: 8300000, guid: 171152e3714bdb443b1bd2931b1399ba, type: 3}
