@@ -5,6 +5,7 @@ public class AudioBox : MonoBehaviour
     public AudioClip click;
     public AudioClip bonus;
     public AudioClip pickUpBootle;
+    public AudioClip coin;
     public AudioClip crouch;
     public AudioClip flyingKick;
     public AudioClip hurt;

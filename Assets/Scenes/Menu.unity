@@ -1207,6 +1207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a5af138004bb34bac3c478ba2eb59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelShop: {fileID: 0}
   panelPause: {fileID: 0}
   panelSettings: {fileID: 1144133425}
 --- !u!82 &503343043
@@ -2393,6 +2394,7 @@ MonoBehaviour:
   click: {fileID: 8300000, guid: 515d4e8f841c72b429eeef822eac3287, type: 3}
   bonus: {fileID: 8300000, guid: 3fad5e3cf2a103b498b621b0c194cdab, type: 3}
   pickUpBootle: {fileID: 8300000, guid: 0d1b2914a1e870748917fdcc753aaa35, type: 3}
+  coin: {fileID: 8300000, guid: 498f57c42505ff8459e2e8459a7d07a8, type: 3}
   crouch: {fileID: 8300000, guid: 6ab80dd76ebf5ce45a3292e24fc14e5f, type: 3}
   flyingKick: {fileID: 8300000, guid: 8b417c18226d9064b852c1f70a54ae6e, type: 3}
   hurt: {fileID: 8300000, guid: 171152e3714bdb443b1bd2931b1399ba, type: 3}

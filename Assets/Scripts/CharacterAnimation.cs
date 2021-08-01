@@ -10,19 +10,21 @@ public class CharacterAnimation : MonoBehaviour
     private SpriteRenderer sr;
     private Collider2D coll;
     public GameObject damage;
+    public int coin;
     int hit;
     int level = 0;
     float health = 10;
+    bool activeBoost = false;
     bool protect = false;
-    int countHealth = 0;
-    int countJump = 0;
-    int countSpeed = 0;
-    int countProtect = 0;
-    GameObject panelBoost;
-    GameObject healthBoost;
-    GameObject jumpBoost;
-    GameObject speedBoost;
-    GameObject protectBoost;
+    public int countHealth = 0;
+    public int countJump = 0;
+    public int countSpeed = 0;
+    public int countProtect = 0;
+    public GameObject panelBoost;
+    public GameObject healthBoost;
+    public GameObject jumpBoost;
+    public GameObject speedBoost;
+    public GameObject protectBoost;
     public float energy;
     public bool energyBonus = false;
     public GameObject PanelGameOver;
@@ -45,6 +47,10 @@ public class CharacterAnimation : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         level = PlayerPrefs.GetInt("Level");
+
+        //PlayerPrefs.SetInt("Coin", 100);
+        coin = PlayerPrefs.GetInt("Coin");
+        GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>().text = coin.ToString();
     }
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.gameObject.tag == "win"){
@@ -55,8 +61,15 @@ public class CharacterAnimation : MonoBehaviour
             PanelWin.SetActive(true);
             Time.timeScale = 0;
         }
+        if(collision.gameObject.tag == "Coin"){
+            coin += Convert.ToInt32(collision.gameObject.name);
+            GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>().text = coin.ToString();
+            GameObject.Find("CoinText").GetComponent<Animation>().Play();
+            GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().coin);
+            PlayerPrefs.SetInt("Coin", coin);
+            Destroy(collision.gameObject);
+        }
         if(collision.gameObject.name == "Health"){
-            Debug.Log(1);
             countHealth++;
             panelBoost.SetActive(true);
             healthBoost.SetActive(true);
@@ -103,7 +116,8 @@ public class CharacterAnimation : MonoBehaviour
         }
     }
     public void BoostJump(){
-        if(countJump > 0){
+        if(countJump > 0 && activeBoost == false){
+            activeBoost = true;
             countJump--;
             GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
             GameObject.Find("JumpBoostText").GetComponent<TextMeshProUGUI>().text = countJump.ToString();
@@ -114,7 +128,8 @@ public class CharacterAnimation : MonoBehaviour
         }
     }
     public void BoostSpeed(){
-        if(countSpeed > 0){
+        if(countSpeed > 0 && activeBoost == false){
+            activeBoost = true;
             countSpeed--;
             GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
             GameObject.Find("SpeedBoostText").GetComponent<TextMeshProUGUI>().text = countSpeed.ToString();
@@ -125,7 +140,8 @@ public class CharacterAnimation : MonoBehaviour
         }
     }
     public void BoostProtect(){
-        if(countProtect > 0){
+        if(countProtect > 0 && activeBoost == false){
+            activeBoost = true;
             countProtect--;
             GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().bonus);
             GameObject.Find("ProtectBoostText").GetComponent<TextMeshProUGUI>().text = countProtect.ToString();
@@ -136,12 +152,15 @@ public class CharacterAnimation : MonoBehaviour
         }
     }
     void OffJump(){
+        activeBoost = false;
         GameObject.Find("Player").GetComponent<PlayerController>().jumpForce /= 1.5f;
     }
     void OffSpeed(){
+        activeBoost = false;
         GameObject.Find("Player").GetComponent<PlayerController>().speed /= 1.5f;
     }
     void OffProtect(){
+        activeBoost = false;
         protect = false;
     }
     private void OnCollisionEnter2D(Collision2D collision){
@@ -183,7 +202,9 @@ public class CharacterAnimation : MonoBehaviour
                 Invoke("HurtOff", 0.5f);
         }
     }
-
+    void FixedUpdate(){
+        GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>().text = coin.ToString();
+    }
     void Update(){
         GameObject.Find("EnergyBar").GetComponent<FillEnergyBar>().CurrentValue = energy/50f;
         

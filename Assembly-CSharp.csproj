@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Angel.cs" />
      <Compile Include="Assets\Scripts\AudioBox.cs" />
      <Compile Include="Assets\Scripts\AudioBoxEnemy.cs" />
+     <Compile Include="Assets\Scripts\Buy.cs" />
      <Compile Include="Assets\Scripts\CharacterAnimation.cs" />
      <Compile Include="Assets\Scripts\CorutineLoader.cs" />
      <Compile Include="Assets\Scripts\DetectorGround.cs" />

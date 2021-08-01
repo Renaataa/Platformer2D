@@ -4,6 +4,7 @@ using TMPro;
 
 public class MainButtons : MonoBehaviour
 {
+    public GameObject panelShop;
     public GameObject panelPause;
     public GameObject panelSettings;
     
@@ -17,6 +18,16 @@ public class MainButtons : MonoBehaviour
         GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
         panelPause.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    public void ShopOn(){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
+        panelShop.SetActive(true);
+    }
+
+    public void ShopOff(){
+        GameObject.Find("AudioBox").GetComponent<AudioBox>().AudioPlay(GameObject.Find("AudioBox").GetComponent<AudioBox>().click);
+        panelShop.SetActive(false);
     }
 
     public void ResetScene(){
